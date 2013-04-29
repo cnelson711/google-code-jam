@@ -1,41 +1,25 @@
 #include <iostream>
 #include <stdbool.h>
 #include <stdint.h>
+#include <string>
 #include <vector>
-#include <cstring>
+#include <set>
+#include <algorithm>
 #include "gmpxx.h"
 typedef mpz_class bignumber;
 
 using namespace std;
 
-void usage() 
+int main()
 {
-	cout << "usage: cat testset.txt | ./main > output.txt \n";
-	cout << "\ttestset - testset filename\n";
-}
-
-
-bool solve() 
-{
-
-}
-
-
-int main(int argc, char *argv[])
-{
-	int i, numcases;
-
-	if (argc != 1) {
-		usage();
-		return -1;
-	}
-
+	int numcases;
 	cin >> numcases;
-	for (i=1; i<=numcases; i++) {
-		// cin >> param1 >> param2;
-		solve();
 
-		cout << "Case #" << i << ": Solved" << endl;
+	for (int i=1; i<=numcases; i++) {
+
+		int ans = 0;
+
+		cout << "Case #" << i << ": " << ans << endl;
 	}
 
 	return 0;
