@@ -19,16 +19,18 @@ a[1][0]  a[1][1]  a[2][2]
 #define I2D_ANTIDIAGONALS 0x10  // diags that lean right
 #define I2D_ALL           0x1E
 
-
+template <class T>
 class Board {
-	char *board;
+	T *board;
 	int height;
 	int width;
   public:
   	Board(int h, int w);
+
+
   	~Board();
 
-  	void setElement(char val, int x, int y);
+  	void setElement(T val, int x, int y);
 
 	/*
 	 * rcdmask = Row/Column/Diag mask; use 
@@ -37,8 +39,9 @@ class Board {
 	 * f_rcd_after  = lambda function that runs after each row/column/diagonal
 	 */
 	void iterate2d(char rcdmask, 
-	               std::function<void (char &, int, int)> f_element, 
+	               std::function<void (T &, int, int)> f_element, 
 	               std::function<void ()> f_rcd_before, 
-	               std::function<void ()> f_rcd_after);  	
+	               std::function<void ()> f_rcd_after);
 };
 
+#include "Board-inl.h"

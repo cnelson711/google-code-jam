@@ -20,21 +20,21 @@ int main()
 	for (int i=1; i<=numcases; i++) {
 		int n, k;
 		cin >> n >> k;
-		Board *b = new Board(n, n);
+		Board <char> b(n, n);
 
 		// Read in board
-		b->iterate2d(I2D_ROWS, [&] (char &element, int x, int y) {
+		b.iterate2d(I2D_ROWS, [&] (char &element, int x, int y) {
 			cin >> element;
 		}, NULL, NULL);
 
 		// Apply Gravity
 		int lastx;
-		b->iterate2d(I2D_ROWS | I2D_REVERSE_ORDER, [&] (char &element, int x, int y) {
+		b.iterate2d(I2D_ROWS | I2D_REVERSE_ORDER, [&] (char &element, int x, int y) {
 			// for each element of a row/column/diag
 			if (element != '.') {
 				char temp = element;
 				element = '.';
-				b->setElement(temp, lastx--, y);
+				b.setElement(temp, lastx--, y);
 			}
 		}, [&] {
 			// before each row/column/diag
@@ -47,7 +47,7 @@ int main()
 		int rcnt, bcnt;
 		char lastc;
 
-		b->iterate2d(I2D_ALL, [&] (char &element, int x, int y) {
+		b.iterate2d(I2D_ALL, [&] (char &element, int x, int y) {
 			// for each element of a row/column/diag
 			if (element == lastc) {
 				if (lastc == 'B') bcnt++;

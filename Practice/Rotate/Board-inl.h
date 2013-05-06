@@ -1,27 +1,30 @@
-#include "Board.h"
 
-Board::Board(int w, int h) 
+template <class T>
+Board<T>::Board(int w, int h) 
 {
 	width = w;
 	height = h;
-	board = new char[w*h];
+	board = new T[w*h];
 }
 
 
-Board::~Board() 
+template <class T>
+Board<T>::~Board() 
 {
 	delete(board);
 }
 
 
-void Board::setElement(char val, int x, int y)
+template <class T>
+void Board<T>::setElement(T val, int x, int y)
 {
 	board[y*width + x] = val;
 }
 
 
-void Board::iterate2d(char rcdmask, 
-                      std::function<void (char &, int, int)> f_element, 
+template <class T>
+void Board<T>::iterate2d(char rcdmask, 
+                      std::function<void (T &, int, int)> f_element, 
                       std::function<void ()> f_rcd_before, 
                       std::function<void ()> f_rcd_after) 
 {
