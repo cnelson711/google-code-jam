@@ -18,7 +18,33 @@ long choose(int n, int k)
 	return r;
 }
 
-
+/*
+ * Notice the pattern as more diamonds fall; there is always a core 
+ * "perfect pyramid" and 0 or more diamonds that slide down either side of 
+ * the perfect pyramid.
+ * 
+ * p = diamond in perfect pyramid
+ * ? = possible diamond location on edge
+ * d = known diamond location on edge
+ * - = no diamond here
+ *         
+ *       - - - - - -          - - - - - -          - - ? ? - -
+ * n=1  - - - P - - -    n=2 - - ? p ? - -    n=3 - - ? p ? - - 
+ *
+ *                             - - - - -            - - p - - 
+ *       - - ? ? - -          - - d d - -          - - p p - -
+ * n=4  - - d p d - -    n=5 - - d p d - -    n=6 - - p p p - - 
+ *
+ *                                                   - - - -
+ *        - - p - -            - - p - -            - ? p ? - 
+ *       - - p p - -          - ? p p ? -          - ? p p ? -
+ * n=7  - ? p p p ? -    n=8 - ? p p p ? -    n=9 - ? p p p ? - 
+ *
+ *         - ? ? -              - ? ? -              - ? ? -
+ *        - ? p ? -            - ? p ? -            - ? p ? - 
+ *       - ? p p ? -          - ? p p ? -          - d p p d -
+ * n=7  - ? p p p ? -    n=8 - d p p p d -    n=9 - d p p p d - 
+ */
 int main()
 {
 	int numcases;
