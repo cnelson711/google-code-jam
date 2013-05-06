@@ -1,28 +1,11 @@
 #include <iostream>
-#include <stdbool.h>
-#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
-#include <string>
-#include <vector>
-#include <set>
-#include <algorithm>
-#include "gmpxx.h"
-typedef mpz_class bignumber;
 
 using namespace std;
 
-void calc(int n, int &numblocks, int &coretowernum) {
-	numblocks = 0;
-	coretowernum = 0;
-	do {
-		numblocks += coretowernum*4 + 1;
-		coretowernum++;
-	} while (n >= numblocks);
-	coretowernum--;
-	numblocks -= coretowernum*4 + 1;
-	coretowernum--;
-}
-
+// Combination
 long choose(int n, int k)
 {
 	if (k > n)
@@ -35,15 +18,6 @@ long choose(int n, int k)
 	return r;
 }
 
-double binomialcdf(int n, int k) {
-	double p = 0.0;
-	for (int i=k; i<=n; i++) {
-		p += choose(n, i) * pow(0.5, i) * pow(0.5, n-i);
-	}
-	return p;
-}
-
-
 
 int main()
 {
@@ -53,40 +27,59 @@ int main()
 	for (int i=1; i<=numcases; i++) {
 		int n, x, y;
 		cin >> n >> x >> y;
-		if (x<0) x = -x;
 		cout << "Case #" << i << ": ";
 
-		int coretowernum, numblocks;
-		calc(n, numblocks, coretowernum);
+		float a, b, c;
+		a = b = 1.0;
+		c = (float) -2*n;
+		
+		// s = number of diamonds on side of perfect pyramid {1, 3, 5, 7...}
+		int s = (int) floor((-b + sqrt(pow(b, 2.0) - 4.0*a*c)) / (2.0*a));
+		s = (s%2 == 0) ? s-1 : s; // round down to nearest odd number
+		// l = level of perfect pyramid {1, 2...}
+		int l = (s-1)/2;
+		// np = number of diamonds in perfect pyramid {1, 6, 15, 28, 45, ...}
+		int np = (s*s + s) / 2;
+		// no = number of blocks left over
+		int no = n - np; 
+		// d = distance of property from origin
+		int d = (abs(x) + y) / 2;
 
-		if (x+y <= coretowernum*2) {
-			// Are cordinates in the core part of the tower?
+		// printf("\ns:%d\nl:%d\nnp:%d\nno:%d\nn:%d\nd:%d\nx:%d\ny:%d\n", s, l, np, no, n, d, x, y);
+
+		if (d <= l) {
+			// property is in the core part of the perfect pyramid
 			cout << 1;
-		} else if (x+y > coretowernum*2 + 2) {
-			// Are cordinates outside the core tower & edge?
+		} else if (d > l+1) {
+			// property is outside the perfect pyramid and surrounding edge
 			cout << 0;
 		} else {
-			// Calculate number of blocks leaning on outside of core tower
-			int numoutsideblocks = n-numblocks;
-			int pos = (y + 1);
+			// property is on the edge of the perfect pyramid
 
-			if (numoutsideblocks == (coretowernum*4+4)) {
+			// pos = position of the property on the side of the pyramid {1, 2, 3... s+2}
+			int pos = y+1;
+
+			if (no == (s+1)*2) {
 				// tower is almost complete; missing one block at very top
-				cout << (pos <= coretowernum) ? 1 : 0;
-			} else if (numoutsideblocks <= (coretowernum*4+4)/2) {
-				// Not enough blocks to spill over to other side of tower yet
-				// Binomial distribution: p(x>=pos) binomial (n=numoutsideblocks,p=.5)
-				cout << binomialcdf(numoutsideblocks, pos);
-			} else {
-				// Spillage!  Calculate the minimum number of blocks on each side (spilled):
-				int spilled = numoutsideblocks - (coretowernum*4+4)/2;
-
-				if (pos <= spilled) {
+				if (x == 0)
+					cout << 0;
+				else 
 					cout << 1;
-				} else {
-					// TODO: this isn't correct logic
-					cout << binomialcdf(numoutsideblocks-spilled-spilled, pos-spilled) << " *";
-				}
+			} else if (no > (s+1) && pos <= (no-s-1)) {
+				// There are enough left over blocks (no) and the position of
+				// the property (pos) is low enough that it will always have a diamond 
+				cout << 1;
+			} else if (x == 0) {
+				// Property as at the top of the pyramid
+				cout << 0;
+			} else {
+				// We know the probability is not 0 or 1; it's a tricky block
+				float favorable = 0;
+				float possible = pow(2, no);
+				for (int j=pos; j<=no; j++)
+					favorable += choose(no, j);
+
+				cout << favorable/possible;
 			}
 		}
 		cout << endl;
