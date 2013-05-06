@@ -1,6 +1,6 @@
 
 /*
-Function for iterating over an mxn matrix:
+Class for iterating over an mxn matrix:
 m = # rows or height
 n = # columns or width
 
@@ -26,10 +26,7 @@ class Board {
 	int width;
   public:
   	Board(int h, int w);
-
-
   	~Board();
-
   	void setElement(T val, int x, int y);
 
 	/*
