@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = $(WARNINGS) -O3 -std=c++11 
 TARGET = main
 LIBS = -lgmpxx -lgmp 
-DEPS = iterator2d.o main.cpp 
+DEPS = Board.o main.cpp 
 
 all: $(DEPS) $(TARGET) $(TESTS)
 
