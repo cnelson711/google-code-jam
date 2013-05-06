@@ -36,7 +36,7 @@ int main()
 		// s = number of diamonds on side of perfect pyramid {1, 3, 5, 7...}
 		int s = (int) floor((-b + sqrt(pow(b, 2.0) - 4.0*a*c)) / (2.0*a));
 		s = (s%2 == 0) ? s-1 : s; // round down to nearest odd number
-		// l = level of perfect pyramid {1, 2...}
+		// l = level of perfect pyramid {0, 1, 2...}
 		int l = (s-1)/2;
 		// np = number of diamonds in perfect pyramid {1, 6, 15, 28, 45, ...}
 		int np = (s*s + s) / 2;
