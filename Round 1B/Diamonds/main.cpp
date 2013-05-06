@@ -27,19 +27,22 @@ long choose(int n, int k)
  * ? = possible diamond location on edge
  * d = known diamond location on edge
  * - = no diamond here
- *         
- *       - - - - - -          - - - - - -          - - ? ? - -
- * n=1  - - - P - - -    n=2 - - ? p ? - -    n=3 - - ? p ? - - 
  *
- *                             - - - - -            - - p - - 
+ *        - - - - -            - - - - -            - - - - -          
+ *       - - - - - -          - - - - - -          - - ? ? - -
+ * n=1  - - - p - - -    n=2 - - ? p ? - -    n=3 - - ? p ? - - 
+ *
+ *                                                   - - - -
+ *        - - - - -            - - - - -            - - p - - 
  *       - - ? ? - -          - - d d - -          - - p p - -
  * n=4  - - d p d - -    n=5 - - d p d - -    n=6 - - p p p - - 
  *
- *                                                   - - - -
+ *         - - - -              - - - -              - - - -
  *        - - p - -            - - p - -            - ? p ? - 
  *       - - p p - -          - ? p p ? -          - ? p p ? -
  * n=7  - ? p p p ? -    n=8 - ? p p p ? -    n=9 - ? p p p ? - 
  *
+ *          - - -                - - -                - - -
  *         - ? ? -              - ? ? -              - ? ? -
  *        - ? p ? -            - ? p ? -            - ? p ? - 
  *       - ? p p ? -          - ? p p ? -          - d p p d -
@@ -82,24 +85,18 @@ int main()
 		} else {
 			// property is on the edge of the perfect pyramid
 
-			// pos = position of the property on the side of the pyramid {1, 2, 3... s+2}
+			// pos = position of the property on the side of the pyramid {1, 2, 3,... s+2}
 			int pos = y+1;
 
-			if (no == (s+1)*2) {
-				// tower is almost complete; missing one block at very top
-				if (x == 0)
-					cout << 0;
-				else 
-					cout << 1;
+			if (x == 0) {
+				// property is at the top of the pyramid
+				cout << 0;
 			} else if (no > (s+1) && pos <= (no-s-1)) {
 				// There are enough left over blocks (no) and the position of
 				// the property (pos) is low enough that it will always have a diamond 
 				cout << 1;
-			} else if (x == 0) {
-				// Property as at the top of the pyramid
-				cout << 0;
 			} else {
-				// We know the probability is not 0 or 1; it's a tricky block
+				// We know the probability is not 0 or 1
 				float favorable = 0;
 				float possible = pow(2, no);
 				for (int j=pos; j<=no; j++)
