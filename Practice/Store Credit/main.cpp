@@ -17,10 +17,17 @@ int main()
 	cin >> numcases;
 
 	for (int i=1; i<=numcases; i++) {
+		int c, n, p[2001];
+		cin >> c >> n;
 
-		int ans = 0;
+		for (int j=0; j<n; j++)
+			cin >> p[j];
 
-		cout << "Case #" << i << ": " << ans << endl;
+		int j, k;
+		for (j=0; j<n; j++)
+			for (k=j+1; k<n; k++)
+				if (p[j] + p[k] == c)
+					cout << "Case #" << i << ": " << j+1 << " " << k+1 << endl;
 	}
 
 	return 0;
