@@ -4,14 +4,13 @@ import sys
 
 
 def main():
-	n = int(sys.stdin.readline())
-	for c in range(1, n + 1):
-		sys.stdout.write("Case #" + str(c) + ": ")
-		# print("Case #" + str(c) + ":")
-	
-		print "Unsolved"
+    n = int(sys.stdin.readline())
+    for c in range(1, n + 1):
+        sys.stdout.write("Case #" + str(c) + ": ")
+        # print("Case #" + str(c) + ":")
+
+        print("Unsolved")
 
 
 if __name__ == "__main__":
     main()
-    
