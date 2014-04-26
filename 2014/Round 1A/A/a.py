@@ -13,7 +13,7 @@ def debug(*objs):
 def main():
     t = int(sys.stdin.readline())
     for c in range(1, t + 1):
-        (n, l) = map(long, tuple(sys.stdin.readline().split()))
+        (n, l) = map(long, sys.stdin.readline().split())
         outlets = map(lambda x: long(x, 2), sys.stdin.readline().split())
         devices = map(lambda x: long(x, 2), sys.stdin.readline().split())
         outlets.sort()
