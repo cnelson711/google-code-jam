@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# cat testset.in | ./main.py > testset.out
+# < testset ./a.py
 
 from __future__ import print_function
 import sys
@@ -8,7 +8,7 @@ import sys
 def debug(*objs):
     print("DEBUG: ", *objs, file=sys.stderr)
     pass
-
+    
 
 def main():
     t = int(sys.stdin.readline())
